@@ -21,7 +21,7 @@ public class Node implements Comparable<Node> {
         this.parent = this;
         this.depth = 0;
         this.moveSet = "";
-        this.priority=0;
+        this.priority = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (board[i][j] == 0) {
@@ -36,7 +36,7 @@ public class Node implements Comparable<Node> {
         this.board = copyBoard(state.board);
         this.parent = state;
         this.parentMove = moveLetter;
-        this.priority=0;
+        this.priority = 0;
         moveSet = String.valueOf(state.moveSet);
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
@@ -162,10 +162,10 @@ public class Node implements Comparable<Node> {
                     continue;
                 } else {
                     hamming++;
-                    hamming += this.depth;
                 }
             }
         }
+        hamming += this.depth;
         return hamming;
     }
 
@@ -173,7 +173,7 @@ public class Node implements Comparable<Node> {
         int manhattan = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
-                if (board[i][j] != 0 && board[i][j] != i*4+j+1) {
+                if (board[i][j] != 0 && board[i][j] != i * 4 + j + 1) {
                     int actualValue = board[i][j];
                     int actualRow = i;
                     int actualCol = j;
@@ -181,22 +181,20 @@ public class Node implements Comparable<Node> {
                     int correctRow = actualValue / 4;
                     int correctCol = actualValue % 4 - 1;
                     manhattan += Math.abs(correctRow - actualRow) + Math.abs(correctCol - actualCol);
-                    manhattan+=this.depth;
                 }
             }
         }
+        manhattan += this.depth;
         return manhattan;
     }
 
     @Override
     public int compareTo(Node o) {
-        if(this.priority > o.priority){
+        if (this.priority > o.priority) {
             return 1;
-        }
-        else if(this.priority < o.priority){
+        } else if (this.priority < o.priority) {
             return -1;
-        }
-        else{
+        } else {
             return 0;
         }
     }

@@ -6,10 +6,10 @@ import java.util.Set;
 public class BFS extends Algorithm {
 
     public Node solve(Node Goal, Node begin, String moveOrder) {
-        Node solved=null;
+        Node solved = null;
 
         if (Goal.isGoal(begin))
-            solved=begin;
+            solved = begin;
 
         Queue<Node> openStates = new LinkedList<Node>();
         Set<Node> closedStates = new HashSet<Node>();
@@ -27,15 +27,15 @@ public class BFS extends Algorithm {
 
             for (Node n : atm.neighbours) {
                 if (Goal.isGoal(n)) {
-                    solved=n;
+                    solved = n;
                 }
                 if (!closedStates.contains(n) && !openStates.contains(n)) {
                     openStates.add(n);
                 }
             }
         }
-        this.visitedStates=closedStates.size()+openStates.size();
-        this.processedStates=closedStates.size();
+        this.visitedStates = closedStates.size() + openStates.size();
+        this.processedStates = closedStates.size();
         return solved;
     }
 

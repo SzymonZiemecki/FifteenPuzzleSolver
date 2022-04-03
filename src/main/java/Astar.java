@@ -5,10 +5,10 @@ import java.util.Set;
 
 public class Astar extends Algorithm {
     public Node solve(Node Goal, Node begin, String heuristic) {
-        Node solved=null;
+        Node solved = null;
 
         if (Goal.isGoal(begin)) {
-            solved=begin;
+            solved = begin;
         }
 
         Queue<Node> openStates = new PriorityQueue<>();

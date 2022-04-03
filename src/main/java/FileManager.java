@@ -21,7 +21,7 @@ public class FileManager {
             for (int i = 0; i < 4; i++) {
                 String[] line = scanner.nextLine().trim().split(" ");
                 for (int j = 0; j < 4; j++) {
-                        boardInt[i][j] = Integer.parseInt(line[j]);
+                    boardInt[i][j] = Integer.parseInt(line[j]);
                 }
             }
         }
@@ -33,8 +33,6 @@ public class FileManager {
         writer.write(output);
         writer.close();
     }
-
-
 
 
 }
