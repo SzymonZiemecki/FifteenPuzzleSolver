@@ -1,7 +1,5 @@
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
 public class main {
 
@@ -28,8 +26,8 @@ public class main {
                 };
 
 
-        FileManager fr = new FileManager(puzzleFile);
-        int[][] board = fr.readBoard();
+        FileManager fileManager = new FileManager(puzzleFile);
+        int[][] board = fileManager.readBoard();
         Node solved = new Node(goodOrder);
         Node toSolve = new Node(board);
 
@@ -45,6 +43,7 @@ public class main {
                 break;
         }
 
+        //Solving puzzle with chosen algorithm and measuring elapsed time
         starts = BigDecimal.valueOf(System.nanoTime());
         solution = solver.solve(solved, toSolve, order);
         ends = BigDecimal.valueOf(System.nanoTime());
@@ -52,9 +51,11 @@ public class main {
         millis = ends.subtract(starts);
         millis = millis.divide(BigDecimal.valueOf(1000000));
 
+        //creating data output
         sol += solution.moveSet.length();
         sol += "\n";
         sol += solution.moveSet;
+
         stats += solution.moveSet.length();
         stats += "\n";
         stats += String.valueOf(solver.visitedStates);
@@ -65,8 +66,10 @@ public class main {
         stats += "\n";
         stats += String.valueOf(millis);
 
-        fr.writeToFile(sol, solFile);
-        fr.writeToFile(stats, statFile);
+
+        // Writing collected data to file
+        fileManager.writeToFile(sol, solFile);
+        fileManager.writeToFile(stats, statFile);
 
 
     }
