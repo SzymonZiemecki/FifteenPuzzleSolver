@@ -1,5 +1,4 @@
 import java.util.HashSet;
-import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
@@ -11,7 +10,7 @@ public class Astar extends Algorithm {
             solved = begin;
         }
 
-        Queue<Node> openStates = new PriorityQueue<>();
+        Queue<Node> openStates = new PriorityQ<Node>();
         Set<Node> closedStates = new HashSet<>();
 
         openStates.add(begin);
@@ -43,12 +42,13 @@ public class Astar extends Algorithm {
                         n.priority = priority1;
                         openStates.add(n);
                     }
-                } else {
-                    openStates.remove(n);
-                    if (n.priority >= priority1) {
-                        n.priority = priority1;
+                    else if(openStates.contains(n)) {
+                        Node k = ((PriorityQ<?>) openStates).removeNode(n);
+                        if (k.priority > priority1) {
+                            n.priority = priority1;
+                            openStates.add(n);
+                        }
                     }
-                    openStates.add(n);
                 }
             }
         }

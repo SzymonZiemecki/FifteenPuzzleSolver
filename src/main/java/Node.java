@@ -1,3 +1,6 @@
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.lang.Math;
@@ -38,14 +41,8 @@ public class Node implements Comparable<Node> {
         this.parentMove = moveLetter;
         this.priority = 0;
         moveSet = String.valueOf(state.moveSet);
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (board[i][j] == 0) {
-                    zeroPosition[0] = i;
-                    zeroPosition[1] = j;
-                }
-            }
-        }
+        this.zeroPosition[0]=state.zeroPosition[0];
+        this.zeroPosition[1]=state.zeroPosition[1];
     }
 
     public Node Move(String moveLetter) {
@@ -154,6 +151,22 @@ public class Node implements Comparable<Node> {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Node node = (Node) o;
+
+        return new EqualsBuilder().append(board, node.board).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(board).toHashCode();
+    }
+
     public int calculateHamming() {
         int hamming = 0;
         for (int i = 1; i <= 4; i++) {
@@ -169,17 +182,21 @@ public class Node implements Comparable<Node> {
         return hamming;
     }
 
+    public int generateHash() {
+        return new HashCodeBuilder(17, 37).append(board).toHashCode();
+    }
+
     public int calculateManhattan() {
         int manhattan = 0;
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 4; j++) {
                 if (board[i][j] != 0 && board[i][j] != i * 4 + j + 1) {
-                    int actualValue = board[i][j];
+                    int actualValue = board[i][j]-1;
                     int actualRow = i;
                     int actualCol = j;
 
                     int correctRow = actualValue / 4;
-                    int correctCol = actualValue % 4 - 1;
+                    int correctCol = actualValue % 4 ;
                     manhattan += Math.abs(correctRow - actualRow) + Math.abs(correctCol - actualCol);
                 }
             }
@@ -198,4 +215,5 @@ public class Node implements Comparable<Node> {
             return 0;
         }
     }
+
 }

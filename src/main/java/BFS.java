@@ -36,6 +36,7 @@ public class BFS extends Algorithm {
         }
         this.visitedStates = closedStates.size() + openStates.size();
         this.processedStates = closedStates.size();
+        this.maxDepth=solved.depth;
         return solved;
     }
 

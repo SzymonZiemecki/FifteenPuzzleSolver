@@ -1,6 +1,4 @@
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 public class DFS extends Algorithm {
     public Node solve(Node Goal, Node Begin, String moveOrder) {
@@ -11,7 +9,7 @@ public class DFS extends Algorithm {
         }
 
         LinkedList<Node> openStates = new LinkedList<Node>();
-        Set<Node> closedStates = new HashSet<Node>();
+        Map<Integer,Node> closedStates = new HashMap<>();
 
         openStates.push(Begin);
         visitedStates++;
@@ -27,7 +25,8 @@ public class DFS extends Algorithm {
                 maxDepth = atm.depth;
             }
 
-            closedStates.add(atm);
+
+            closedStates.put(atm.hashCode(),atm);
             atm.makeNeighbours(moveOrder);
             atm.reverseNeighbours();
 
@@ -35,14 +34,21 @@ public class DFS extends Algorithm {
             for (Node n : atm.neighbours) {
                 if (Goal.isGoal(n)) {
                     solved = n;
+                    break;
                 }
-                if (!closedStates.contains(n) && !openStates.contains(n)) {
+                if (!closedStates.containsKey(n.hashCode()) && !openStates.contains(n)) {
                     openStates.push(n);
                     visitedStates++;
                 }
             }
         }
         this.processedStates = closedStates.size();
+
+        if (solved != null) {
+            if(maxDepth < solved.depth ) {
+                maxDepth = solved.depth;
+            }
+        }
         return solved;
     }
 }
