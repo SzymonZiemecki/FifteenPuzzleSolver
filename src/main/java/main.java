@@ -64,10 +64,10 @@ public class main {
             stats += solution.moveSet.length();
         }
         else{
-            sol+="0";
+            sol+="-1";
             sol += "\n";
-            sol+="0";
-            stats +="0";
+            sol+="-1";
+            stats +="-1";
         }
 
 
@@ -80,10 +80,7 @@ public class main {
         stats+="\n";
         stats+=String.valueOf(millis);
 
-       /* fr.writeToFile(sol,solFile);
-        fr.writeToFile(stats,statFile);*/
-
-        System.out.println(sol);
-        System.out.println(stats);
+        fr.writeToFile(sol,solFile);
+        fr.writeToFile(stats,statFile);
     }
 }

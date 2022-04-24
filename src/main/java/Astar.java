@@ -10,7 +10,7 @@ public class Astar extends Algorithm {
             solved = begin;
         }
 
-        Queue<Node> openStates = new PriorityQ<Node>();
+        PriorityQ<Node> openStates = new PriorityQ<Node>();
         Set<Node> closedStates = new HashSet<>();
 
         openStates.add(begin);
@@ -27,7 +27,7 @@ public class Astar extends Algorithm {
             }
 
             closedStates.add(atm);
-            atm.makeNeighbours("DLUR");
+            atm.makeNeighbours("LUDR");
 
             for (Node n : atm.neighbours) {
                 int priority1 = 0;
@@ -41,12 +41,10 @@ public class Astar extends Algorithm {
                     if (!openStates.contains(n)) {
                         n.priority = priority1;
                         openStates.add(n);
-                    }
-                    else if(openStates.contains(n)) {
-                        Node k = ((PriorityQ<?>) openStates).removeNode(n);
+                    } else if (openStates.contains(n)) {
+                        Node k = openStates.getNode(n);
                         if (k.priority > priority1) {
-                            n.priority = priority1;
-                            openStates.add(n);
+                            openStates.Update(k,priority1);
                         }
                     }
                 }

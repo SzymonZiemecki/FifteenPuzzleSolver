@@ -150,7 +150,6 @@ public class Node implements Comparable<Node> {
             System.out.println();
         }
     }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
