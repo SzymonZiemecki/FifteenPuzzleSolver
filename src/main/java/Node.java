@@ -2,6 +2,7 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.lang.Math;
 import java.util.List;
@@ -17,6 +18,21 @@ public class Node implements Comparable<Node> {
     public int zeroPosition[] = new int[2];
     public int priority;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Node node = (Node) o;
+
+        return new EqualsBuilder().append(board, node.board).isEquals();
+    }
+
+    @Override
+    public int hashCode() {
+        return new HashCodeBuilder(17, 37).append(board).toHashCode();
+    }
 
     public Node(int[][] board) {
         this.board = board;
@@ -150,21 +166,8 @@ public class Node implements Comparable<Node> {
             System.out.println();
         }
     }
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
 
-        if (o == null || getClass() != o.getClass()) return false;
 
-        Node node = (Node) o;
-
-        return new EqualsBuilder().append(board, node.board).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(board).toHashCode();
-    }
 
     public int calculateHamming() {
         int hamming = 0;

@@ -33,6 +33,9 @@ public class main {
         Node toSolve = new Node(board);
 
 
+
+
+
         switch(algorithm){
             case "bfs":
                 solver= new BFS();
@@ -82,5 +85,6 @@ public class main {
 
         fr.writeToFile(sol,solFile);
         fr.writeToFile(stats,statFile);
+
     }
 }

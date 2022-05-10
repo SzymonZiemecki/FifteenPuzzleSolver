@@ -31,6 +31,7 @@ public class DFS extends Algorithm {
             atm.reverseNeighbours();
 
 
+
             for (Node n : atm.neighbours) {
                 if (Goal.isGoal(n)) {
                     solved = n;
