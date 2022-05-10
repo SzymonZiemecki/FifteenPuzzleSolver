@@ -1,7 +1,4 @@
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class FileManager {
@@ -12,15 +9,25 @@ public class FileManager {
         this.readFile = readFile;
     }
 
+    public int[] readBoardSize() throws FileNotFoundException {
+        int[] size = new int[2];
+        Scanner scanner = new Scanner(new File(readFile));
+        String[] line = scanner.nextLine().trim().split(" ");
+        size[0] = Integer.parseInt(line[0]);
+        size[1] = Integer.parseInt(line[1]);
+        return size;
+    }
+
     public int[][] readBoard() throws IOException {
         String board = "";
-        int[][] boardInt = new int[4][4];
+        int[] size = readBoardSize();
+        int[][] boardInt = new int[size[0]][size[1]];
         Scanner scanner = new Scanner(new File(readFile));
         scanner.nextLine();
         while (scanner.hasNext()) {
-            for (int i = 0; i < 4; i++) {
+            for (int i = 0; i < size[0]; i++) {
                 String[] line = scanner.nextLine().trim().split(" ");
-                for (int j = 0; j < 4; j++) {
+                for (int j = 0; j < size[1]; j++) {
                     boardInt[i][j] = Integer.parseInt(line[j]);
                 }
             }
@@ -32,6 +39,24 @@ public class FileManager {
         BufferedWriter writer = new BufferedWriter(new FileWriter(writeFile));
         writer.write(output);
         writer.close();
+    }
+
+    public int[][] generateValidBoard() throws FileNotFoundException {
+        int[] size = readBoardSize();
+        int[][] board = new int[size[0]][size[1]];
+        int x=1;
+        for(int i = 0 ; i < size[0];i++){
+            for(int j = 0 ; j < size[1];j++){
+                if (i == size[0]-1 && j == size[1]-1) {
+                    board[i][j]=0;
+                }
+                else {
+                    board[i][j] = x;
+                    x++;
+                }
+            }
+        }
+        return board;
     }
 
 

@@ -17,22 +17,15 @@ public class main {
         BigDecimal starts= BigDecimal.valueOf(0);
         BigDecimal ends= BigDecimal.valueOf(0);
 
-        int[][] goodOrder =
-                {
-                        { 1, 2, 3, 4},
-                        { 5, 6, 7, 8 },
-                        { 9, 10, 11, 12},
-                        { 13, 14, 15, 0}
-                };
 
 
 
-        FileManager fr = new FileManager(puzzleFile);
+        FileManager fr = new FileManager("C:\\Users\\szymo\\Desktop\\finalROUND\\4x4_07_00001.txt");
+        int[][] goodOrder = fr.generateValidBoard();
+        int[] boardSize=fr.readBoardSize();
         int[][] board = fr.readBoard();
-        Node solved = new Node(goodOrder);
-        Node toSolve = new Node(board);
-
-
+        Node solved = new Node(goodOrder,boardSize);
+        Node toSolve = new Node(board,boardSize);
 
 
 
@@ -83,8 +76,11 @@ public class main {
         stats+="\n";
         stats+=String.valueOf(millis);
 
-        fr.writeToFile(sol,solFile);
-        fr.writeToFile(stats,statFile);
+ /*       fr.writeToFile(sol,solFile);
+        fr.writeToFile(stats,statFile);*/
+
+        System.out.println(sol);
+        System.out.println(stats);
 
     }
 }

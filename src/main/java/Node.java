@@ -15,6 +15,8 @@ public class Node implements Comparable<Node> {
     public String moveSet;
     public int depth;
     public int[][] board;
+    public int boardFirstDim;
+    public int boardSecondDim;
     public int zeroPosition[] = new int[2];
     public int priority;
 
@@ -34,15 +36,17 @@ public class Node implements Comparable<Node> {
         return new HashCodeBuilder(17, 37).append(board).toHashCode();
     }
 
-    public Node(int[][] board) {
+    public Node(int[][] board,int[] boardSize) {
         this.board = board;
         this.parentMove = "none";
         this.parent = this;
         this.depth = 0;
         this.moveSet = "";
+        this.boardFirstDim=boardSize[0];
+        this.boardSecondDim=boardSize[1];
         this.priority = 0;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < boardFirstDim; i++) {
+            for (int j = 0; j < boardSecondDim; j++) {
                 if (board[i][j] == 0) {
                     zeroPosition[0] = i;
                     zeroPosition[1] = j;
@@ -52,6 +56,8 @@ public class Node implements Comparable<Node> {
     }
 
     public Node(Node state, String moveLetter) {
+        this.boardFirstDim=state.boardFirstDim;
+        this.boardSecondDim=state.boardSecondDim;
         this.board = copyBoard(state.board);
         this.parent = state;
         this.parentMove = moveLetter;
@@ -124,9 +130,9 @@ public class Node implements Comparable<Node> {
 
     public boolean isMovePossible(char direction) {
         if ((zeroPosition[0] == 0 && direction == 'U')
-                || (zeroPosition[0] == 3 && direction == 'D')
+                || (zeroPosition[0] == boardFirstDim-1 && direction == 'D')
                 || (zeroPosition[1] == 0 && direction == 'L')
-                || (zeroPosition[1] == 3 && direction == 'R')) {
+                || (zeroPosition[1] == boardFirstDim-1 && direction == 'R')) {
             return false;
         }
         return true;
@@ -134,9 +140,9 @@ public class Node implements Comparable<Node> {
 
 
     public int[][] copyBoard(int[][] board) {
-        int[][] newBoard = new int[4][4];
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        int[][] newBoard = new int[boardFirstDim][boardSecondDim];
+        for (int i = 0; i < boardFirstDim; i++) {
+            for (int j = 0; j < boardSecondDim; j++) {
                 // copy elements
                 newBoard[i][j] = board[i][j];
             }
@@ -145,8 +151,8 @@ public class Node implements Comparable<Node> {
     }
 
     public boolean isGoal(Node s) {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < boardFirstDim; i++) {
+            for (int j = 0; j < boardSecondDim; j++) {
                 if (this.board[i][j] != s.board[i][j])
                     return false;
             }
@@ -159,8 +165,8 @@ public class Node implements Comparable<Node> {
     }
 
     public void printBoard() {
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
+        for (int i = 0; i < boardFirstDim; i++) {
+            for (int j = 0; j < boardSecondDim; j++) {
                 System.out.print(this.board[i][j] + " ");
             }
             System.out.println();
@@ -171,8 +177,8 @@ public class Node implements Comparable<Node> {
 
     public int calculateHamming() {
         int hamming = 0;
-        for (int i = 1; i <= 4; i++) {
-            for (int j = 1; j <= 4; j++) {
+        for (int i = 1; i <= boardFirstDim; i++) {
+            for (int j = 1; j <= boardSecondDim; j++) {
                 if (board[i - 1][j - 1] == (i - 1) * 4 + j || board[i - 1][j - 1] == 0) {
                     continue;
                 } else {
@@ -190,15 +196,15 @@ public class Node implements Comparable<Node> {
 
     public int calculateManhattan() {
         int manhattan = 0;
-        for (int i = 0; i < 4; i++) {
-            for (int j = 0; j < 4; j++) {
-                if (board[i][j] != 0 && board[i][j] != i * 4 + j + 1) {
+        for (int i = 0; i < boardFirstDim; i++) {
+            for (int j = 0; j < boardSecondDim; j++) {
+                if (board[i][j] != 0 && board[i][j] != i * boardFirstDim + j + 1) {
                     int actualValue = board[i][j]-1;
                     int actualRow = i;
                     int actualCol = j;
 
-                    int correctRow = actualValue / 4;
-                    int correctCol = actualValue % 4 ;
+                    int correctRow = actualValue / boardFirstDim;
+                    int correctCol = actualValue % boardFirstDim ;
                     manhattan += Math.abs(correctRow - actualRow) + Math.abs(correctCol - actualCol);
                 }
             }
