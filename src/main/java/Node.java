@@ -20,7 +20,7 @@ public class Node implements Comparable<Node> {
     public int zeroPosition[] = new int[2];
     public int priority;
 
-    @Override
+/*    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
 
@@ -34,7 +34,7 @@ public class Node implements Comparable<Node> {
     @Override
     public int hashCode() {
         return new HashCodeBuilder(17, 37).append(board).toHashCode();
-    }
+    }*/
 
     public Node(int[][] board,int[] boardSize) {
         this.board = board;
@@ -132,7 +132,7 @@ public class Node implements Comparable<Node> {
         if ((zeroPosition[0] == 0 && direction == 'U')
                 || (zeroPosition[0] == boardFirstDim-1 && direction == 'D')
                 || (zeroPosition[1] == 0 && direction == 'L')
-                || (zeroPosition[1] == boardFirstDim-1 && direction == 'R')) {
+                || (zeroPosition[1] == boardSecondDim-1 && direction == 'R')) {
             return false;
         }
         return true;
@@ -179,7 +179,7 @@ public class Node implements Comparable<Node> {
         int hamming = 0;
         for (int i = 1; i <= boardFirstDim; i++) {
             for (int j = 1; j <= boardSecondDim; j++) {
-                if (board[i - 1][j - 1] == (i - 1) * 4 + j || board[i - 1][j - 1] == 0) {
+                if (board[i - 1][j - 1] == (i - 1) * boardFirstDim + j || board[i - 1][j - 1] == 0) {
                     continue;
                 } else {
                     hamming++;
@@ -204,7 +204,7 @@ public class Node implements Comparable<Node> {
                     int actualCol = j;
 
                     int correctRow = actualValue / boardFirstDim;
-                    int correctCol = actualValue % boardFirstDim ;
+                    int correctCol = actualValue % boardSecondDim ;
                     manhattan += Math.abs(correctRow - actualRow) + Math.abs(correctCol - actualCol);
                 }
             }

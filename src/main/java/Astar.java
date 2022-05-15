@@ -24,6 +24,7 @@ public class Astar extends Algorithm {
 
             if (Goal.isGoal(atm)) {
                 solved = atm;
+                break;
             }
 
             closedStates.add(atm);

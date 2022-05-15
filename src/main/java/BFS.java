@@ -28,6 +28,7 @@ public class BFS extends Algorithm {
             for (Node n : atm.neighbours) {
                 if (Goal.isGoal(n)) {
                     solved = n;
+                    break;
                 }
                 if (!closedStates.contains(n) && !openStates.contains(n)) {
                     openStates.add(n);

@@ -20,7 +20,7 @@ public class main {
 
 
 
-        FileManager fr = new FileManager("C:\\Users\\szymo\\Desktop\\finalROUND\\4x4_07_00001.txt");
+        FileManager fr = new FileManager(puzzleFile);
         int[][] goodOrder = fr.generateValidBoard();
         int[] boardSize=fr.readBoardSize();
         int[][] board = fr.readBoard();
@@ -76,11 +76,11 @@ public class main {
         stats+="\n";
         stats+=String.valueOf(millis);
 
- /*       fr.writeToFile(sol,solFile);
-        fr.writeToFile(stats,statFile);*/
+        fr.writeToFile(sol,solFile);
+        fr.writeToFile(stats,statFile);
 
-        System.out.println(sol);
-        System.out.println(stats);
+/*        System.out.println(sol);
+        System.out.println(stats);*/
 
     }
 }
